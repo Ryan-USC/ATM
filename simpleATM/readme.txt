@@ -5,11 +5,12 @@ ATM machine:
 4. Deposit money
 
 How to build?
-Assumption:
-1. User cannot deposit money exceed the ATM can store
-2. Deposit and Without number cannot be negative
-
 Step 1:
+    Assumption:
+    1. User cannot deposit money exceed the ATM can store
+    2. Deposit and Without number cannot be negative
+
+Step 2:
     Entity:
         Account:
             Attributes:
@@ -26,7 +27,7 @@ Step 1:
                 query(int pin): check balance of current account
                 withdraw(int pin, int amount): withdraw money
                 deposit(int pin, int amount): deposit money
-Step 2:
+
 How to run this application?
 1. Run the main method in ATM class will bring you to an ATM machine via CLI
     The default account information store in ATM is belows:
