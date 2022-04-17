@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class test02 {
     public static void main(String[] args) {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
-        int[] cmd1 = new int[]{2222, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100,
+        int[] cmd1 = new int[]{3333, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100,
                 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100,
                 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 4};
         int[] cmd2 = new int[]{1111, 2, 50, 2, 50, 2, 50, 2, 50, 2, 50,
