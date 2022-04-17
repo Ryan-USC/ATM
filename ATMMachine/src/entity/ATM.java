@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -33,7 +34,6 @@ public class ATM implements Runnable{
             e.printStackTrace();
         }
         logger.addHandler(fh);
-
         SimpleFormatter formatter = new SimpleFormatter();
         fh.setFormatter(formatter);
 
@@ -75,21 +75,22 @@ public class ATM implements Runnable{
 
     private void withdraw(int pin, int amount){
         synchronized (this.map.get(pin)){
-            System.out.println(pin);
-            System.out.println(this.map.get(pin));
-            System.out.println(Thread.currentThread().getName());
-            if (amount >= 0 && amount <= this.totalBalance && amount <= this.map.get(pin).getBalance()){
+            int currentBalance = AccountDao.selectByPin(pin).getBalance();
+            this.map.get(pin).setBalance(currentBalance);
+
+            if (amount >= 0 && amount <= this.totalBalance && amount <= currentBalance){
                 this.totalBalance -= amount;
-                int currentBalance = this.map.get(pin).getBalance();
+
                 this.map.get(pin).setBalance(currentBalance - amount);
                 AccountDao.updateAccount(this.map.get(pin));
                 this.logger.info("User withdraw " + amount);
+                System.out.println(Thread.currentThread().getName());
                 System.out.println("Withdraw success! Current balance is " + this.map.get(pin).getBalance());
             } else if (amount > this.totalBalance) {
                 System.out.println("ATM out of Money");
                 this.logger.warning("Withdraw Fail! Reason: ATM out of Money!");
             }
-            else if (amount > this.map.get(pin).getBalance()) {
+            else if (amount > currentBalance) {
                 System.out.println("You don't have enough balance!");
                 this.logger.warning("Withdraw Fail! Reason: Balance not enough!");
             }
@@ -102,6 +103,8 @@ public class ATM implements Runnable{
 
     private void deposit(int pin, int amount){
         synchronized (this.map.get(pin)) {
+            int currentBalance = AccountDao.selectByPin(pin).getBalance();
+            this.map.get(pin).setBalance(currentBalance);
             if (amount <= 0) {
                 System.out.println("Invalid amount!");
                 this.logger.warning("Invalid input!");
@@ -113,7 +116,6 @@ public class ATM implements Runnable{
                 return;
             }
             this.totalBalance += amount;
-            int currentBalance = this.map.get(pin).getBalance();
             this.map.get(pin).setBalance(currentBalance + amount);
             AccountDao.updateAccount(this.map.get(pin));
             this.logger.info("User deposit " + amount);
@@ -153,7 +155,7 @@ public class ATM implements Runnable{
 
 
     public static void main(String[] args) {
-        ATM atm = new ATM(10000);
+        ATM atm = new ATM(3000);
         while (true){
             System.out.println("Welcome to ATM!");
             int inputPin;
@@ -192,7 +194,7 @@ public class ATM implements Runnable{
                     int amount = atm.sc.nextInt();
                     atm.deposit(inputPin, amount);
                 }else if(num == 4){
-                    atm.logger.info("User " + inputPin + "logout.");
+                    atm.logger.info("User " + inputPin + " logout.");
                     break;
                 } else {
                     atm.logger.warning("Invalid input!");
