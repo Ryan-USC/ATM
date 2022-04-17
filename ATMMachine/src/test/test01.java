@@ -2,19 +2,60 @@ package test;
 
 import entity.ATM;
 import entity.Account;
-import util.DBUtil;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 // This test simulate two user use two different machine to access the same account
 // To make user data consistency
+
+/*
+* Expected output: The sum of money two users withdraw equals 2000
+* Actual output:
+No2
+Withdraw success! Current balance is 1900
+No2
+Withdraw success! Current balance is 1800
+No1
+Withdraw success! Current balance is 1700
+No1
+Withdraw success! Current balance is 1600
+No1
+Withdraw success! Current balance is 1500
+No1
+Withdraw success! Current balance is 1400
+No1
+Withdraw success! Current balance is 1300
+No1
+Withdraw success! Current balance is 1200
+No1
+Withdraw success! Current balance is 1100
+No1
+Withdraw success! Current balance is 1000
+No1
+Withdraw success! Current balance is 900
+No1
+Withdraw success! Current balance is 800
+No1
+Withdraw success! Current balance is 700
+No1
+Withdraw success! Current balance is 600
+No1
+Withdraw success! Current balance is 500
+No1
+Withdraw success! Current balance is 400
+No1
+Withdraw success! Current balance is 300
+No1
+Withdraw success! Current balance is 200
+No1
+Withdraw success! Current balance is 100
+No1
+Withdraw success! Current balance is 0
+You don't have enough balance!
+You don't have enough balance!
+You don't have enough balance!
+......
+*
+* */
 public class test01 {
     public static void main(String[] args) {
         int[] cmd = new int[]{1111, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100,
