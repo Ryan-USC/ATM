@@ -4,6 +4,9 @@ ATM machine:
 3. Withdraw money
 4. Deposit money
 
+Dependency:
+    mysql-connector-java-8.0.13
+
 Directory:
 src
     --- dao
