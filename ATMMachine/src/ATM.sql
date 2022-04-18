@@ -1,3 +1,4 @@
+create database ATM;
 
 create table accounts(
 pin int(4) not null,
