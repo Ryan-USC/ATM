@@ -58,18 +58,21 @@ You don't have enough balance!
 * */
 public class test01 {
     public static void main(String[] args) {
+        // simulate user's input
         int[] cmd = new int[]{1111, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100,
                 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100,
                 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 2, 100, 4};
 
-        Account account1 = new Account(1111, 2000);
+        
         Account[] list = new Account[]{
-                account1,
+                new Account(1111, 2000),
                 new Account(2222, 100),
                 new Account(3333, 5000)
         };
+        
         ATM atm1 = new ATM(5000, cmd, list);
         ATM atm2 = new ATM(5000, cmd, list);
+        
         new Thread(atm1, "No1").start();
         new Thread(atm2, "No2").start();
 
