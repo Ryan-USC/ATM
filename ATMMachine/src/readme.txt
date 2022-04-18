@@ -7,6 +7,9 @@ ATM machine:
 Dependency:
     mysql-connector-java-8.0.13
 
+Note: You need to change the username and password in DBUntil.java in order to access local mysql server!
+
+
 Directory:
 src
     --- dao
