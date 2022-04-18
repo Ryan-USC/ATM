@@ -11,11 +11,15 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class ATM implements Runnable{
+    // The maximum money the ATM can store
     final static private Integer maxStorage = 10000;
+    // The current stored money in ATM
     private Integer totalBalance;
+    // Input Scanner
     private Scanner sc;
+    // HashMap as a local cache, pin is the key and Account object is the value
     HashMap<Integer, Account> map = new HashMap<>();
-
+    // log user's input and database manipulation into info.log
     Logger logger = Logger.getLogger("ATMLog");
     FileHandler fh;
 
@@ -24,6 +28,7 @@ public class ATM implements Runnable{
     // authenticated to indicated whether the user login successfully
     boolean authenticated;
 
+    // constructor 1
     public ATM(Integer totalBalance) {
         this.totalBalance = totalBalance;
         sc = new Scanner(System.in);
@@ -39,6 +44,7 @@ public class ATM implements Runnable{
 
     }
 
+    // constructor 1 
     public ATM(Integer totalBalance, int[] cmd, Account[] list) {
         this.totalBalance = totalBalance;
         this.cmd = cmd;
@@ -49,7 +55,7 @@ public class ATM implements Runnable{
     }
 
 
-
+    // check if the pin is correct
     private boolean login(int pin){
         Account account = AccountDao.selectByPin(pin);
         if (account == null) {
@@ -63,7 +69,8 @@ public class ATM implements Runnable{
         }
         return true;
     }
-
+    
+    // query the balance
     private void query(int pin){
         synchronized (this.map.get(pin)) {
             int currentBalance = AccountDao.selectByPin(pin).getBalance();
@@ -72,7 +79,7 @@ public class ATM implements Runnable{
         }
     }
 
-
+    // withdraw money
     private void withdraw(int pin, int amount){
         synchronized (this.map.get(pin)){
             int currentBalance = AccountDao.selectByPin(pin).getBalance();
@@ -101,6 +108,7 @@ public class ATM implements Runnable{
         }
     }
 
+    // deposit money
     private void deposit(int pin, int amount){
         synchronized (this.map.get(pin)) {
             int currentBalance = AccountDao.selectByPin(pin).getBalance();
@@ -154,6 +162,7 @@ public class ATM implements Runnable{
     }
 
 
+    // This method simulate a user access an ATM
     public static void main(String[] args) {
         ATM atm = new ATM(3000);
         while (true){
