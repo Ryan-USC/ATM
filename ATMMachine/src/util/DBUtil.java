@@ -17,7 +17,7 @@ public class DBUtil {
     * get sql connection object
     * */
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/ATM?useSSL=false&serverTimezone=America/Los_Angeles&allowPublicKeyRetrieval=true","root","Jaychou1314");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/ATM?useSSL=false&serverTimezone=America/Los_Angeles&allowPublicKeyRetrieval=true","root","123456");
     }
 
     public static void close(Connection conn, Statement ps, ResultSet rs){
